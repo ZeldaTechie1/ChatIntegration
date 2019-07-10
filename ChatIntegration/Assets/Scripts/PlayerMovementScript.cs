@@ -7,7 +7,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     public GameObject mainCamera;
     private float rotationClamp;
-    private Vector2 rotation = Vector2.zero;
+    private Quaternion rotation;
     //editable values for twitch chat
     private float movementSpeed;
     private float horizontalSensitivity;
@@ -17,6 +17,7 @@ public class PlayerMovementScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rotation = transform.rotation;
         movementSpeed = 10f;
         jumpSpeed = 1f;
         rotationClamp = 80;//this restricts the camera from going upside down
