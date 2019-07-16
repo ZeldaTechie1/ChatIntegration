@@ -8,6 +8,7 @@ public class PlayerMovementScript : MonoBehaviour
     public GameObject mainCamera;
     private float rotationClamp;
     private Quaternion rotation;
+    Rigidbody rb;
     //editable values for twitch chat
     private float movementSpeed;
     private float horizontalSensitivity;
@@ -21,6 +22,7 @@ public class PlayerMovementScript : MonoBehaviour
         movementSpeed = 10f;
         jumpSpeed = 1f;
         rotationClamp = 80;//this restricts the camera from going upside down
+        rb = GetComponent<Rigidbody>();
         //these default ones can be changed within the player settings
         horizontalSensitivity = 1f;
         verticalSensitivity = 1f;
@@ -40,10 +42,11 @@ public class PlayerMovementScript : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 movement = Vector3.zero;
-        movement += transform.right * horizontal;
-        movement += transform.forward * vertical;
+        movement += transform.right * horizontal*movementSpeed;
+        movement += transform.forward * vertical * movementSpeed;
+        movement.y = rb.velocity.y;
 
-        transform.position += movement * movementSpeed * Time.deltaTime;
+        rb.velocity = movement;
 
     }
 
